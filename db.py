@@ -1,15 +1,20 @@
 import psycopg2
 from psycopg2 import sql
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv('db.py.env')
 
 # Establecer la conexión a la base de datos
 def connect_db():
     try:
         connection = psycopg2.connect(
-            dbname="Events_DB", 
-            user="usuario", 
-            password="contraseña", 
-            host="localhost", 
-            port="5432"
+            dbname=os.getenv('DB_NAME'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
+            host=os.getenv('DB_HOST'),
+            port=os.getenv('DB_PORT')
         )
         return connection
     except Exception as e:
