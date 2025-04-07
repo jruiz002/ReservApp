@@ -3,18 +3,16 @@ from psycopg2 import sql
 from dotenv import load_dotenv
 import os
 
-# Load environment variables
-load_dotenv('db.py.env')
+load_dotenv()
 
-# Establecer la conexión a la base de datos
 def connect_db():
     try:
         connection = psycopg2.connect(
-            dbname=os.getenv('DB_NAME'),
-            user=os.getenv('DB_USER'),
-            password=os.getenv('DB_PASSWORD'),
-            host=os.getenv('DB_HOST'),
-            port=os.getenv('DB_PORT')
+            dbname=os.environ.get('DB_NAME'),
+            user=os.environ.get('DB_USER'),
+            password=os.environ.get('DB_PASSWORD'),
+            host=os.environ.get('DB_HOST'),
+            port=os.environ.get('DB_PORT')
         )
         return connection
     except Exception as e:
