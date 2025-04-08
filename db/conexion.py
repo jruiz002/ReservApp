@@ -1,7 +1,8 @@
 import psycopg2
-from psycopg2 import extensions
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
 def connect_db():
     """Función para conectar a la base de datos PostgreSQL."""
     try:
