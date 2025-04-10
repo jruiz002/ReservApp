@@ -16,16 +16,17 @@ def reserve_seat(conn, user_id, seat_id, isolation_level):
     try:
         cur.execute("BEGIN;")
         
-        # Verificar disponibilidad del asiento
+        # Verificar disponibilidad del asiento con FOR UPDATE para bloqueo
         cur.execute("SELECT estado FROM Asientos WHERE id_asiento = %s FOR UPDATE;", (seat_id,))
         seat = cur.fetchone()
 
-        if seat and seat[0] == False:
-            # Asiento ya reservado
+        if seat and seat[0] == True:
+            # Ya está reservado
             print(f"Usuario {user_id} no pudo reservar el asiento {seat_id}, ya está ocupado.")
             cur.execute("ROLLBACK;")
+            return False
         else:
-            # Asiento disponible, proceder con la reserva
+            # Disponible, proceder
             cur.execute("""
                 INSERT INTO Reservas (id_usuario, id_asiento) 
                 VALUES (%s, %s);
@@ -33,9 +34,11 @@ def reserve_seat(conn, user_id, seat_id, isolation_level):
             cur.execute("UPDATE Asientos SET estado = TRUE WHERE id_asiento = %s;", (seat_id,))
             cur.execute("COMMIT;")
             print(f"Usuario {user_id} reservó el asiento {seat_id} con éxito.")
+            return True
 
     except Exception as e:
         print(f"Error al intentar reservar el asiento {seat_id} para el usuario {user_id}: {e}")
         cur.execute("ROLLBACK;")
+        return False
     finally:
         cur.close()
