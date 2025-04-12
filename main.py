@@ -101,7 +101,7 @@ def start_simulation():
                 num_users = int(input("\nIngrese el número de usuarios para la simulación: "))
                 if num_users > 0 and num_users <= 30:
                     break
-                print("El número de usuarios debe ser mayor que 0.")
+                print("El número de usuarios debe ser mayor que 0 y menor o igual a 30.")
             except ValueError:
                 print("Por favor, ingrese un número válido.")
 
