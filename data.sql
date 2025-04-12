@@ -36,7 +36,3 @@ INSERT INTO Usuarios (nombre, email) VALUES
 
 
 COMMIT;
-
---select * from Asientos;
-
-

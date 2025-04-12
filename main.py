@@ -4,7 +4,7 @@ import time
 from db.conexion import connect_db
 from db.funciones_reservas import reserve_seat
 from db.funciones_usuarios import get_first_n_users
-from db.setup_data import setup_simulacion  # NUEVO IMPORT
+from db.setup_data import setup_simulacion 
 
 def simulate_reservations(num_users, isolation_level, num_seats):
     conn = connect_db()
@@ -62,11 +62,7 @@ def simulate_reservations(num_users, isolation_level, num_seats):
     for user_id, seat_id in reservas_fallidas:
         print(f"Usuario {user_id} no pudo reservar el asiento {seat_id}")
 
-
     conn.close()
-
-
-
 
 def start_simulation():
     while True:
